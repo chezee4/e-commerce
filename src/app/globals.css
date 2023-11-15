@@ -8,6 +8,7 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -16,12 +17,13 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.cl-internal-b3fm6y {
+  display: none;
+}
+.cl-formButtonPrimary {
+ background-color:#000;
+}
+
+.cl-formButtonPrimary:hover{
+  background-color: rgba(0, 0, 0, .8);
 }
