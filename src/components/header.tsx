@@ -11,8 +11,8 @@ import { LogIn } from "lucide-react";
 export default function Header() {
   const {isSignedIn} = useAuth();
   return (
-    <header>
-      <div>
+    <header className="">
+      <div className="  h-16 max-w-[1300px] px-3 mx-auto flex justify-between items-center">
         {isSignedIn?
         <UserButton
           appearance={{

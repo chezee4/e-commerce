@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import { cn } from "@/lib/utils";
 
-const inter = Inter({ subsets: ["latin"] });
+const dm_Sans = DM_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,12 +19,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ClerkProvider>
-        <body className={inter.className}>
-          <Header />
-          {children}
-        </body>
-      </ClerkProvider>
+      <body className={cn(dm_Sans.className, " min-h-[100dvh]")}>
+        <ClerkProvider>
+            <Header />
+            {children}
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

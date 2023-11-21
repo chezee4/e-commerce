@@ -2,18 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+
+.checkbox-container {
+  display: inline-block;
+  position: relative;
+  height: 18px;
+  width: 18px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.custom-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  border: 0.855px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox:checked ~ .checkmark {
+  background-color: #fd7e14;
+}
+
+.custom-checkbox:checked ~ .checkmark:after {
+  display: block;
+}
+
+@keyframes checkAnim {
+  0% {
+    height: 0;
   }
+
+  100% {
+    height: 10px;
+  }
+}
+
+.custom-checkbox:checked ~ .checkmark:after {
+  animation: checkAnim 0.2s forwards;
 }
 
 .cl-internal-b3fm6y,
@@ -27,4 +78,37 @@
 
 .cl-formButtonPrimary:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+.rc-slider-handle {
+  width: 3px;
+  height: 13px;
+  padding: 5px;
+  background-color: #aaaaaa !important;
+  border-color: #7d7d7d !important;
+  border-radius: 10px;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+.rc-slider-track {
+  background-color: #353535 !important;
+}
+
+.rc-slider-rail {
+  background: #cccbcb !important;
+}
+
+.item-enter {
+  opacity: 0;
+}
+.item-enter-active {
+  opacity: 1;
+  transition: opacity 200ms linear;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 200ms linear;
 }
