@@ -1,23 +1,22 @@
+import { StoreProducts } from "@/types";
 import { create } from "zustand";
-import { StoreProducts} from "@/types";
-
 
 
 export const useProducts = create<StoreProducts>((set, get) => ({
     products: [],
     product: null,
     visibleProducts: [],
-    lastFetch: false,
     loading: false,
     error: null,
+    priceRange: [0, Infinity],
+    searchText: '',
     fetchAllProducts: async () => {
         set({loading: true});
         try {
             const res = await fetch("https://fakestoreapi.com/products/");
             if (!res.ok) throw new Error("failed to fetch products");
             const products = await res.json();
-            set({products, error: null});
-            get().filterProducts(null);
+            set({products, error: null, visibleProducts: products});
         } catch(e:any) {
             set({error: e.message});
         } finally {
@@ -37,25 +36,20 @@ export const useProducts = create<StoreProducts>((set, get) => ({
         }
     },
     filterProducts: (value) => {
-        let elements;
         if (value && typeof value !== "number") {
-            elements = get().products.filter(
-                ({ price }) => price >= value[0] && price <= value[1]
-            );
-            set({lastFetch: true});
-        } else {
-            elements = get().products;
-            get().products.length > get().visibleProducts.length && set({lastFetch: false});
+            get().priceRange = value;
         }
-        set({visibleProducts: elements});
+        get().applyFilters();
     },
     searchProduct: (text) => {
-        if (text.replace(/\s/g, "").length === 0) {
-            set({visibleProducts: get().products});
-            get().products.length > get().visibleProducts.length && set({lastFetch: false});
-            return;
-        }
-        const elements = get().products.filter(({ title }) => title.toLowerCase().indexOf(text.toLowerCase()) > -1);
-        set({lastFetch: true, visibleProducts: elements});
+        get().searchText = text;
+        get().applyFilters();
+    },
+    applyFilters: () => {
+        const elements = get().products.filter(({ title, price }) => 
+            title.toLowerCase().includes(get().searchText.toLowerCase()) &&
+            price >= get().priceRange[0] && price <= get().priceRange[1]
+        );
+        set({visibleProducts: elements});
     }
 }));

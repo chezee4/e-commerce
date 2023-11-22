@@ -11,11 +11,13 @@ export interface StoreProducts  {
     products: IProduct[];
     product: IProduct | null;
     visibleProducts: IProduct[];
-    lastFetch: boolean;
     loading: boolean;
     error: string | null;
+    priceRange: number[];
+    searchText: string;
     fetchAllProducts: () => Promise<void>;
     fetchProduct: (id: number) => Promise<void>;
-    filterProducts: (value: number | number[] | null) => void;
+    filterProducts: (value: number | number[]) => void;
     searchProduct: (text: string) => void;
+    applyFilters: () => void;
 }
