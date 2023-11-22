@@ -17,9 +17,9 @@ export default function Header() {
           <Image src={Logo} alt="Logo" className=" border-r" />
         </div>
         <nav className="flex gap-7 items-center">
-          <Link href="/" className=" text-lg relative before:absolute  before:content-['_'] before:-bottom-[68%] before:h-[1.5px] before:w-[100%] before:bg-black">Shop</Link>
+          <Link href="/" className=" text-lg relative before:absolute  before:content-['_'] before:-bottom-[68%] before:h-[2px] before:w-0 before:translate-x-[-50%] before:left-[50%] w-full before:inline-block before:hover:w-[40px] before:transition-all before:duration-200 before:ease-linear before:bg-black">Shop</Link>
           <div className="flex gap-5 items-center relative  before:absolute before:content-['_'] before:-left-3 before:h-[50%] before:w-[1px] before:bg-black ">
-            <div className=" inline-block relative w-[inherit] mm:w-auto">
+            <div className="inline-block relative w-[inherit] mm:w-auto">
               <input
                 placeholder="Search..."
                 autoComplete="off"
@@ -27,7 +27,7 @@ export default function Header() {
                 type="text"
                 className="pl-[35px] pr-[11px] mm:pr-0 h-[35px] text-[15px] border-none text-[#070707] outline-none w-[35px] transition-all duration-200 ease-linear bg-transparent rounded-none mm:rounded-[50px] cursor-pointer focus:w-[150px]  mm:focus:w-[230px]  "
               />
-              <button className=" absolute w-[35px] h-[35px] top-0 left-0 p-[8px] bg-transparent pointer-events-none">
+              <button className="absolute w-[35px] h-[35px] top-0 left-0 p-[8px] bg-transparent pointer-events-none">
                <Search size={20}/>
               </button>
             </div>

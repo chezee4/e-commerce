@@ -10,7 +10,7 @@ import { filter } from "./config/filter";
 import { fadeInAnimationVariantsForStatic } from "@/lib/utils";
 import { StoreProducts } from "@/types";
 import { cn } from "@/lib/utils";
-
+import { Search} from "lucide-react";
 import { useProducts } from "@/context";
 
 export default function Filter() {
@@ -18,8 +18,32 @@ export default function Filter() {
   const filterProducts = useProducts(
     (state: StoreProducts) => state.filterProducts
   );
+  const searchProduct = useProducts(
+    (state: StoreProducts) => state.searchProduct
+  );
+  const [value, setValue]  = useState("");
+  const Submit = (e:React.FormEvent) => {
+     e.preventDefault();
+     searchProduct(value);
+};
   return (
     <>
+    <div className=" mx-auto relative w-max md:w-full max-w-[85%] mb-8">
+      <form onSubmit={Submit}>
+      <input
+        placeholder="Search..."
+        autoComplete="off"
+        name="text"
+        type="text"
+        value={value}
+        onChange = {(e) => setValue(e.target.value)}
+        className=" border-b border-white outline-none text-[#303028] p-[10px_30px_10px_20px] w-full transition-all duration-300 ease-linear bg-transparent shadow-[0px_0px_0.5px_0px_#000] cursor-pointer placeholder:text-[#525144]"
+      />
+      <button onClick={() => searchProduct(value)} className=" absolute w-[35px] h- right-0 top-1 p-[8px] transition hover:translate-y-[-2px] bg-transparent">
+        <Search size={20}/>
+      </button>
+      </form>
+    </div>
       <motion.div
         className="mx-auto max-w-[380px]  md:max-w-[280px] sm:min-w-[220px] rounded-2xl bg-white p-2 shadow-custom-shadow"
         variants={fadeInAnimationVariantsForStatic}
