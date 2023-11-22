@@ -5,12 +5,10 @@ import { Disclosure } from "@headlessui/react";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { motion } from "framer-motion";
-
 import { filter } from "./config/filter";
-import { fadeInAnimationVariantsForStatic } from "@/lib/utils";
 import { StoreProducts } from "@/types";
-import { cn } from "@/lib/utils";
-import { Search} from "lucide-react";
+import { cn, fadeInAnimationVariantsForStatic } from "@/lib/utils";
+import { Search } from "lucide-react";
 import { useProducts } from "@/context";
 
 export default function Filter() {
@@ -21,38 +19,24 @@ export default function Filter() {
   const searchProduct = useProducts(
     (state: StoreProducts) => state.searchProduct
   );
-  const [value, setValue]  = useState("");
-  const Submit = (e:React.FormEvent) => {
-     e.preventDefault();
-     searchProduct(value);
-};
+  const [value, setValue] = useState("");
+  const Submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    searchProduct(value);
+  };
   return (
-    <>
-    <div className=" mx-auto relative w-max md:w-full max-w-[85%] mb-8">
-      <form onSubmit={Submit}>
-      <input
-        placeholder="Search..."
-        autoComplete="off"
-        name="text"
-        type="text"
-        value={value}
-        onChange = {(e) => setValue(e.target.value)}
-        className=" border-b border-white outline-none text-[#303028] p-[10px_30px_10px_20px] w-full transition-all duration-300 ease-linear bg-transparent shadow-[0px_0px_0.5px_0px_#000] cursor-pointer placeholder:text-[#525144]"
-      />
-      <button onClick={() => searchProduct(value)} className=" absolute w-[35px] h- right-0 top-1 p-[8px] transition hover:translate-y-[-2px] bg-transparent">
-        <Search size={20}/>
-      </button>
-      </form>
-    </div>
-      <motion.div
-        className="mx-auto max-w-[380px]  md:max-w-[280px] sm:min-w-[220px] rounded-2xl bg-white p-2 shadow-custom-shadow"
-        variants={fadeInAnimationVariantsForStatic}
-        initial="initial"
-        whileInView="animate"
-        viewport={{
-          once: true,
-        }}
-      >
+    <motion.aside 
+    variants={fadeInAnimationVariantsForStatic}
+    initial="initial"
+    whileInView="animate"
+    viewport={{
+      once: true,
+    }}
+    className=" w-full md:w-[25%] min-w-[220px]">
+      <h3 className=" text-center mb-9 whitespace-nowrap text-4xl font-medium leading-[150%]">
+        Shop The Latest
+      </h3>
+      <div className="mx-auto max-w-[380px] mb-10 md:max-w-[280px] sm:min-w-[220px] rounded-2xl bg-white p-2 shadow-custom-shadow">
         <Disclosure>
           {({ open }) => (
             <>
@@ -162,8 +146,27 @@ export default function Filter() {
             </>
           )}
         </Disclosure>
-      </motion.div>
-      <div className=" max-w-[220px] mx-auto mt-10">
+      </div>
+      <div className=" mx-auto relative w-max md:w-full max-w-[85%] mb-8">
+        <form onSubmit={Submit}>
+          <input
+            placeholder="Search..."
+            autoComplete="off"
+            name="text"
+            type="text"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            className=" border-b border-white outline-none text-[#303028] p-[10px_30px_10px_20px] w-full transition-all duration-300 ease-linear bg-transparent shadow-[0px_0px_0.5px_0px_#000] cursor-pointer placeholder:text-[#525144]"
+          />
+          <button
+            onClick={() => searchProduct(value)}
+            className=" absolute w-[35px] h- right-0 top-1 p-[8px] transition hover:translate-y-[-2px] bg-transparent"
+          >
+            <Search size={20} />
+          </button>
+        </form>
+      </div>
+      <div className=" max-w-[250px] mx-auto mt-10">
         <Slider
           range
           min={0}
@@ -185,6 +188,6 @@ export default function Filter() {
           </button>
         </div>
       </div>
-    </>
+    </motion.aside>
   );
 }

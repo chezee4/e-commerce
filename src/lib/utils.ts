@@ -8,13 +8,13 @@ export function cn(...inputs: ClassValue[]) {
 export const fadeInAnimationVariantsDynamic = {
   initial: {
     opacity: 0,
-    y: 50,
+    y: 20,
   },
   animate: (index: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.05 * index,
+      delay: 0.03 * index,
     },
   }),
 };

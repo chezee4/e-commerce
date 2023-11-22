@@ -1,8 +1,8 @@
 import { StoreProducts } from "@/types";
-import { create } from "zustand";
+import { createWithEqualityFn } from "zustand/traditional";
 
 
-export const useProducts = create<StoreProducts>((set, get) => ({
+export const useProducts = createWithEqualityFn<StoreProducts>((set, get) => ({
     products: [],
     product: null,
     visibleProducts: [],

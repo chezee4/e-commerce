@@ -1,13 +1,24 @@
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { fadeInAnimationVariantsDynamic } from "@/lib/utils";
 import { IProduct } from "@/types";
 
-type ProductProps = Omit<IProduct, 'category' | 'description'>;
+type ProductProps = Omit<IProduct, 'category' | 'description'> & {
+  index: number;
+};
 
-export default function Product({ id, image, price, title }: ProductProps) {
+export default function Product({ id, image, price, title, index }: ProductProps) {
   return (
-    <div
+    <motion.div
       className="cursor-pointer bg-black border border-black text-white rounded-lg transition-all duration-300 transform hover:-translate-y-1"
+      variants={fadeInAnimationVariantsDynamic}
+      initial="initial"
+      whileInView="animate"
+      viewport={{
+        once: true,
+      }}
+      custom={index}
       key={id}
     >
       <Link href="#">
@@ -31,6 +42,6 @@ export default function Product({ id, image, price, title }: ProductProps) {
           </span>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 }
