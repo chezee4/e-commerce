@@ -16,6 +16,9 @@ export const fadeInAnimationVariantsDynamic = {
     transition: {
       delay: 0.03 * index,
     },
+    transitionEnd: {
+      transform: "", 
+    },
   }),
 };
 

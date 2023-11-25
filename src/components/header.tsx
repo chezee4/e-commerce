@@ -13,9 +13,9 @@ export default function Header() {
   return (
     <header className=" border-b border-[#D8D8D8]">
       <div className="  h-16 max-w-[1300px] px-3 mx-auto flex justify-between items-center">
-        <div>
-          <Image src={Logo} alt="Logo" className=" border-r" />
-        </div>
+        <Link href="/shop">
+          <Image src={Logo} alt="Logo" className=" border-r w-auto h-auto" priority={true}  />
+        </Link>
         <nav className="flex gap-7 items-center">
           <Link href="/" className=" text-lg relative before:absolute  before:content-['_'] before:-bottom-[68%] before:h-[2px] before:w-0 before:translate-x-[-50%] before:left-[50%] w-full before:inline-block before:hover:w-[40px] before:transition-all before:duration-200 before:ease-linear before:bg-black">Shop</Link>
           <div className="flex gap-5 items-center relative  before:absolute before:content-['_'] before:-left-3 before:h-[50%] before:w-[1px] before:bg-black ">

@@ -22,7 +22,9 @@ export default function RootLayout({
       <body className={cn(dm_Sans.className, " min-h-[100dvh]")}>
         <ClerkProvider>
             <Header />
+            <main className="flex min-h-screen flex-col items-center justify-between  max-w-[1300px] px-3 mx-auto ">
             {children}
+            </main>
         </ClerkProvider>
       </body>
     </html>
