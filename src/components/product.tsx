@@ -4,11 +4,12 @@ import { motion } from "framer-motion";
 import { fadeInAnimationVariantsDynamic } from "@/lib/utils";
 import { IProduct } from "@/types";
 
-type ProductProps = Omit<IProduct, 'category' | 'description'> & {
+type ProductProps = Omit<IProduct, 'category' | 'description' | 'rating'> & {
   index: number;
+  link:string;
 };
 
-export default function Product({ id, image, price, title, index }: ProductProps) {
+export default function Product({ id, image, price, title, index, link }: ProductProps) {
   return (
     <motion.div
       className="cursor-pointer bg-zinc-800 border border-zinc-500 text-white rounded-lg transition-all duration-300 hover:-translate-y-1"
@@ -21,7 +22,7 @@ export default function Product({ id, image, price, title, index }: ProductProps
       custom={index}
       key={id}
     >
-      <Link href={`shop/${id}`}>
+      <Link href={link}>
         {" "}
         <div className=" flex items-center justify-center p-[20px_10px_30px] bg-white rounded-[7px_7px_0_0] border">
           <Image

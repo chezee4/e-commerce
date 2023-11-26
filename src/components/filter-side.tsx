@@ -147,7 +147,7 @@ export default function Filter() {
           )}
         </Disclosure>
       </div>
-      <div className=" mx-auto relative w-max md:w-full max-w-[85%] mb-8">
+      <div className=" mx-auto relative w-full max-w-[380px] lg:max-w-[280px] mb-8">
         <form onSubmit={Submit}>
           <input
             placeholder="Search..."
