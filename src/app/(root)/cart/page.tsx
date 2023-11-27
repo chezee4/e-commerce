@@ -33,7 +33,7 @@ const CartPage = () => {
               />
             ))}
           </ul>
-          <div className="w-full max-w-[450px] m-auto rounded-lg p-5 lg:p-0 bg-[#f3f2f2] lg:bg-transparent">
+          <div className="w-full max-w-[450px] mx-auto rounded-lg p-5 lg:p-0 bg-[#f3f2f2] lg:bg-transparent">
             <h3 className="text-3xl font-semibold 0 outline-none">
               Cart totals
             </h3>

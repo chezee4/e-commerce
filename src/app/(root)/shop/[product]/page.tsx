@@ -4,21 +4,24 @@ import MessageLink from "@/components/message-link";
 import SimilarItems from "@/components/similar-items";
 import ImageGridLayout from "@/components/ui/image-grid-layout";
 import QuantityInput from "@/components/ui/quantity-input";
+
+import { Dialog,Transition } from "@headlessui/react";
 import Stars from "@/components/ui/stars";
 import { useProducts } from "@/context";
 import { cn } from "@/lib/utils";
 import { IProduct, StoreProducts } from "@/types";
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { shallow } from "zustand/shallow";
 type ProductPageProps = {
   params: { product: string };
 };
 export default function ProductPage({ params }: ProductPageProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const fetchProduct = useProducts(
     (state: StoreProducts) => state.fetchProduct,
     shallow
   );
-  
+
   const loading = useProducts((state: StoreProducts) => state.loading, shallow);
   useEffect(() => {
     fetchProduct(+params.product);
@@ -61,7 +64,9 @@ export default function ProductPage({ params }: ProductPageProps) {
             <Stars rate={rating.rate} />
             <span className=" hidden mm:inline text-sm leading-[168%]">{`${rating.count} customer review`}</span>
           </div>
-          <p className=" leading-[165%] text-sm lg:text-[17px]">{description}</p>
+          <p className=" leading-[165%] text-sm lg:text-[17px]">
+            {description}
+          </p>
           <div className=" mt-10 mb-14 flex gap-12 items-center">
             <QuantityInput id={id} value={value} className=" hidden mm:block" />
             <button
@@ -73,19 +78,79 @@ export default function ProductPage({ params }: ProductPageProps) {
                 }
               )}
               disabled={rating.count / 10 <= disabledButton()!}
-              onClick={() => addToCart(id, value)}
+              onClick={() => {
+                addToCart(id, value);
+                setIsOpen(true);
+              }}
             >
               ADD TO CART
             </button>
+            <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/30" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white p-10 text-left flex flex-col justify-center items-center shadow-xl transition-all">
+                  <Dialog.Title
+                    as="h2"
+                    className="text-base sm:text-xl text-center font-medium leading-6 text-gray-900"
+                  >
+                  Operation is successful
+                  </Dialog.Title>
+                  <div className="mt-4 max-w-[500px] text-center">
+                    <p className=" text-sm sm:text-base text-gray-500">
+                    Your product has been successfully added to the cart.Hurry up and pick up even more products at a great price!
+                    </p>
+                  </div>
+
+                  <div className="mt-6 text-center ">
+                    <button
+                      type="button"
+                      className="inline-flex  justify-center rounded-md border border-transparent bg-blue-100 px-6 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Got it, thanks!
+                    </button>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
           </div>
           <MessageLink />
           <div className=" mt-5 lg:mt-10">
             <p className="flex gap-3 lg:gap-6">
               <span className=" text-base lg:text-lg leading-[168%]">SKU:</span>{" "}
-              <span className=" text-base lg:text-lg leading-[168%] opacity-70">{id}</span>
+              <span className=" text-base lg:text-lg leading-[168%] opacity-70">
+                {id}
+              </span>
             </p>
             <p className="flex gap-3 lg:gap-6">
-              <span className=" text-base lg:text-lg leading-[168%]">Categories:</span>{" "}
+              <span className=" text-base lg:text-lg leading-[168%]">
+                Categories:
+              </span>{" "}
               <span className=" text-base lg:text-lg leading-[168%] opacity-70">
                 {category}
               </span>
@@ -94,10 +159,10 @@ export default function ProductPage({ params }: ProductPageProps) {
         </div>
       </section>
       <section className="w-full">
-      <InfoTabs description={description} count={rating.count}/>
+        <InfoTabs description={description} count={rating.count} />
       </section>
       <section className="w-full mt-20 sm:mt-32">
-        <SimilarItems category={category}/>
+        <SimilarItems category={category} />
       </section>
     </>
   );
