@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <header className=" border-b border-[#D8D8D8]">
       <div className="  h-16 max-w-[1300px] px-3 mx-auto flex justify-between items-center">
-        <Link href="/shop">
+        <Link href="/">
           <Image
             src={Logo}
             alt="Logo"
@@ -29,7 +29,7 @@ export default function Header() {
         </Link>
         <nav className="flex gap-7 items-center">
           <Link
-            href="/shop"
+            href="/"
             className={cn(
               " text-lg relative before:absolute  before:content-['_'] before:-bottom-[68%] before:h-[2px] before:w-0 before:translate-x-[-50%] before:left-[50%] w-full before:inline-block before:hover:w-[40px]  before:transition-all before:duration-200 before:ease-linear before:bg-black",
               { "before:w-[40px]": pathName === "/shop" }

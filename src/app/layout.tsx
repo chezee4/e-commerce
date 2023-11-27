@@ -4,6 +4,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import { cn } from "@/lib/utils";
+import Footer from "@/components/footer";
 
 const dm_Sans = DM_Sans({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <main className="flex min-h-screen flex-col items-center justify-between  max-w-[1300px] px-3 mx-auto ">
             {children}
           </main>
+          <Footer/>
         </ClerkProvider>
       </body>
     </html>

@@ -5,7 +5,7 @@ import SimilarItems from "@/components/similar-items";
 import ImageGridLayout from "@/components/ui/image-grid-layout";
 import QuantityInput from "@/components/ui/quantity-input";
 
-import { Dialog,Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 import Stars from "@/components/ui/stars";
 import { useProducts } from "@/context";
 import { cn } from "@/lib/utils";
@@ -42,9 +42,40 @@ export default function ProductPage({ params }: ProductPageProps) {
   );
   if (loading || product === null) {
     return (
-      <p className=" absolute top-1/2 left-1/2 text-9xl translate-y-[-50%] translate-x-[-50%] text-red-600">
-        loading...
-      </p>
+      <svg
+        width="140"
+        height="140"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        className="absolute top-1/2 left-1/2  translate-y-[-50%] translate-x-[-50%] "
+      >
+        <circle cx="4" cy="12" r="3">
+          <animate
+            id="spinner_jObz"
+            begin="0;spinner_vwSQ.end-0.25s"
+            attributeName="r"
+            dur="0.75s"
+            values="3;.2;3"
+          />
+        </circle>
+        <circle cx="12" cy="12" r="3">
+          <animate
+            begin="spinner_jObz.end-0.6s"
+            attributeName="r"
+            dur="0.75s"
+            values="3;.2;3"
+          />
+        </circle>
+        <circle cx="20" cy="12" r="3">
+          <animate
+            id="spinner_vwSQ"
+            begin="spinner_jObz.end-0.45s"
+            attributeName="r"
+            dur="0.75s"
+            values="3;.2;3"
+          />
+        </circle>
+      </svg>
     );
   }
   const disabledButton = () =>
@@ -86,58 +117,64 @@ export default function ProductPage({ params }: ProductPageProps) {
               ADD TO CART
             </button>
             <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black/30" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+              <Dialog
+                as="div"
+                className="relative z-10"
+                onClose={() => setIsOpen(false)}
               >
-                <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white p-10 text-left flex flex-col justify-center items-center shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h2"
-                    className="text-base sm:text-xl text-center font-medium leading-6 text-gray-900"
-                  >
-                  Operation is successful
-                  </Dialog.Title>
-                  <div className="mt-4 max-w-[500px] text-center">
-                    <p className=" text-sm sm:text-base text-gray-500">
-                    Your product has been successfully added to the cart.Hurry up and pick up even more products at a great price!
-                    </p>
-                  </div>
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0"
+                  enterTo="opacity-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <div className="fixed inset-0 bg-black/30" />
+                </Transition.Child>
 
-                  <div className="mt-6 text-center ">
-                    <button
-                      type="button"
-                      className="inline-flex  justify-center rounded-md border border-transparent bg-blue-100 px-6 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={() => setIsOpen(false)}
+                <div className="fixed inset-0 overflow-y-auto">
+                  <div className="flex min-h-full items-center justify-center p-4 text-center">
+                    <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0 scale-95"
+                      enterTo="opacity-100 scale-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100 scale-100"
+                      leaveTo="opacity-0 scale-95"
                     >
-                      Got it, thanks!
-                    </button>
+                      <Dialog.Panel className="w-full max-w-[600px] transform overflow-hidden rounded-2xl bg-white p-10 text-left flex flex-col justify-center items-center shadow-xl transition-all">
+                        <Dialog.Title
+                          as="h2"
+                          className="text-base sm:text-xl text-center font-medium leading-6 text-gray-900"
+                        >
+                          Operation is successful
+                        </Dialog.Title>
+                        <div className="mt-4 max-w-[500px] text-center">
+                          <p className=" text-sm sm:text-base text-gray-500">
+                            Your product has been successfully added to the
+                            cart.Hurry up and pick up even more products at a
+                            great price!
+                          </p>
+                        </div>
+
+                        <div className="mt-6 text-center ">
+                          <button
+                            type="button"
+                            className="inline-flex  justify-center rounded-md border border-transparent bg-blue-100 px-6 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            onClick={() => setIsOpen(false)}
+                          >
+                            Got it, thanks!
+                          </button>
+                        </div>
+                      </Dialog.Panel>
+                    </Transition.Child>
                   </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+                </div>
+              </Dialog>
+            </Transition>
           </div>
           <MessageLink />
           <div className=" mt-5 lg:mt-10">

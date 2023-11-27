@@ -1,11 +1,6 @@
 import { Mail, Instagram, Twitter, Github, Facebook } from "lucide-react";
 export const messages = [
   {
-    href: "vadimdufinec@gmail.com",
-    Icon: Mail,
-    alt: "Email",
-  },
-  {
     href: "https://t.me/chezee_0",
     Icon: Twitter,
     alt: "Telegram",
