@@ -1,5 +1,4 @@
-import { useCallback } from "react";
-
+import { useDebugValue, useEffect, useState,useCallback } from "react";
 export const useHttp = () => {
   const request = useCallback(
     async (
@@ -27,3 +26,24 @@ export const useHttp = () => {
 
   return { request };
 };
+
+
+export function useLocalStorage(key: string, initialState: any) {
+  const [state, setState] = useState(initialState);
+  useDebugValue(state);
+
+  useEffect(() => {
+    const item = localStorage.getItem(key);
+    if (item) setState(parse(item));
+  }, []);
+
+  return [state, setState];
+}
+
+function parse(obj: any) {
+  try {
+    return JSON.parse(obj);
+  } catch {
+    return obj;
+  }
+}

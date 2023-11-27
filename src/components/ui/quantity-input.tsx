@@ -1,24 +1,26 @@
 import { useProducts } from "@/context";
+import { cn } from "@/lib/utils";
 import { StoreProducts } from "@/types";
 import React, { useState } from "react";
 import { shallow } from "zustand/shallow";
 
 type QuantityInputProps = {
   id: string;
-  changeCurrent?: (value: number) => void;
+  value: number;
+  className?: string;
+  changeCurrent?: (e: React.MouseEvent<HTMLButtonElement>,id:string) => void;
 };
-const QuantityInput = ({ id, changeCurrent }: QuantityInputProps) => {
+const QuantityInput = ({ id,value, className, changeCurrent }: QuantityInputProps) => {
   const toggle = useProducts((state: StoreProducts) => state.toggle, shallow);
-  const value = useProducts((state: StoreProducts) => state.value, shallow);
   const setValue = useProducts(
     (state: StoreProducts) => state.setValue,
     shallow
   );
   return (
-    <div className=" hidden mm:block">
+    <div className={cn(className)}>
       <button
         className=" p-[7px_16px_11px_15px] lg:p-[14px_16px_12px_15px] bg-[#eeecec]  rounded-[15px_0px_0px_15px]"
-        onClick={(e) => toggle(e, id)}
+        onClick={(e) => {(changeCurrent && changeCurrent(e , id)) || toggle(e, id)}}
       >
         -
       </button>
@@ -27,7 +29,6 @@ const QuantityInput = ({ id, changeCurrent }: QuantityInputProps) => {
         value={value}
         onChange={(e) => {
           setValue(+e.target.value);
-          changeCurrent && changeCurrent(value);
         }}
         min={1}
         max={10}
@@ -37,7 +38,7 @@ const QuantityInput = ({ id, changeCurrent }: QuantityInputProps) => {
       <button
         className="p-[7px_16px_11px_15px] lg:p-[14px_16px_12px_15px] bg-[#eeecec] rounded-[0px_15px_15px_0px]"
         type="button"
-        onClick={(e) => toggle(e, id)}
+        onClick={(e) => {(changeCurrent && changeCurrent(e , id)) || toggle(e, id)}}
       >
         +
       </button>

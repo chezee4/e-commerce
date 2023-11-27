@@ -23,7 +23,7 @@ export default function Header() {
           <Image
             src={Logo}
             alt="Logo"
-            className=" border-r w-auto h-auto"
+            className=" hidden mm:inline w-auto h-auto"
             priority={true}
           />
         </Link>
@@ -44,13 +44,13 @@ export default function Header() {
                 autoComplete="off"
                 name="text"
                 type="text"
-                className="pl-[35px] pr-[11px] mm:pr-0 h-[35px] text-[15px] border-none text-[#070707] outline-none w-[35px] transition-all duration-200 ease-linear bg-transparent rounded-none mm:rounded-[50px] cursor-pointer focus:w-[150px]  mm:focus:w-[230px]  "
+                className="pl-[35px] pr-0 h-[35px] text-[15px] border-none text-[#070707] outline-none w-[35px] transition-all duration-200 ease-linear bg-transparent rounded-none mm:rounded-[50px] cursor-pointer focus:w-[125px]  mm:focus:w-[230px]  "
               />
               <button className="absolute w-[35px] h-[35px] top-0 left-0 p-[8px] bg-transparent pointer-events-none">
                 <Search size={20} />
               </button>
             </div>
-            <Link href="#" className=" relative">
+            <Link href="/cart" className=" relative">
               <ShoppingCart size={20} /> 
               {cartItems.length ? <span className=" absolute text-[9px] font-semibold text-yellow-800 bottom-[-50%] right-[-44%] inline-block p-[2px_7px_2px_7px] bg-yellow-400 rounded-full">{cartItems.length}</span>:null}
             </Link>

@@ -18,6 +18,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     (state: StoreProducts) => state.fetchProduct,
     shallow
   );
+  
   const loading = useProducts((state: StoreProducts) => state.loading, shallow);
   useEffect(() => {
     fetchProduct(+params.product);
@@ -62,7 +63,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
           <p className=" leading-[165%] text-sm lg:text-[17px]">{description}</p>
           <div className=" mt-10 mb-14 flex gap-12 items-center">
-            <QuantityInput id={id} />
+            <QuantityInput id={id} value={value} className=" hidden mm:block" />
             <button
               className={cn(
                 "p-[14px_50px] w-full mm:w-auto lg:p-[15px_60px] bg-[#fad692] text-[13px] lg:text-base font-medium transition-all duration-200 ease-linear hover:bg-[#dcb66e]",

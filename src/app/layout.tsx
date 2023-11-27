@@ -21,10 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(dm_Sans.className, " min-h-[100dvh]")}>
         <ClerkProvider>
-            <Header />
-            <main className="flex min-h-screen flex-col items-center justify-between  max-w-[1300px] px-3 mx-auto ">
+          <Header />
+          <main className="flex min-h-screen flex-col items-center justify-between  max-w-[1300px] px-3 mx-auto ">
             {children}
-            </main>
+          </main>
         </ClerkProvider>
       </body>
     </html>

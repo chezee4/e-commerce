@@ -1,16 +1,18 @@
-import { StoreProducts } from "@/types";
+"use client";
+import {  StoreProducts} from "../types";
 import { createWithEqualityFn } from "zustand/traditional";
 
 export const useProducts = createWithEqualityFn<StoreProducts>((set, get) => ({
   products: [],
   product: null,
-  visibleProducts: [],
+  visibleProducts:[],
   loading: false,
   error: null,
   priceRange: [0, Infinity],
   searchText: "",
   value: 1,
   cartItems: [],
+  setCartItems: (cartItems) => set({ cartItems }),
   fetchAllProducts: async () => {
     set({ loading: true });
     try {
@@ -34,7 +36,7 @@ export const useProducts = createWithEqualityFn<StoreProducts>((set, get) => ({
       set({ error: e.message });
     } finally {
       set({ loading: false });
-      get().fetchAllProducts();
+     !get().products.length && get().fetchAllProducts();
     }
   },
   updateProductCount: (id) => {
@@ -84,10 +86,11 @@ export const useProducts = createWithEqualityFn<StoreProducts>((set, get) => ({
       });
       set({ cartItems: updatedCartItems });
     } else if (product) {
-      set({ cartItems: [...cartItems, { ...product, count: value }] });
+      const newCartItems = [...cartItems, { ...product, count: value }];
+      set({ cartItems: newCartItems });
     }
     set({value: 1})
-  },
+  },  
   setValue: (value) => set({ value }),
   toggle: (e: React.MouseEvent<HTMLButtonElement>, id) => { 
     const point = e.currentTarget.textContent;
@@ -100,4 +103,30 @@ export const useProducts = createWithEqualityFn<StoreProducts>((set, get) => ({
       set((state) => ({ value: state.value + 1 }));
     }
   },
+  remoteCartItem: (id) => {
+    const cartItems = get().cartItems;
+    const updatedCartItems = cartItems.filter(
+      (cartItem) => cartItem.id !== id
+    );
+    set({ cartItems: updatedCartItems });
+   
+  },
+  changeCurrent: (e: React.MouseEvent<HTMLButtonElement>,id) =>{
+    const point = e.currentTarget.textContent;
+    const cartItems = get().cartItems;
+    const updatedCartItems = cartItems.map((cartItem) => {
+      if (cartItem.id === id) {
+        if (point === "-" && cartItem.count > 1) {
+          return { ...cartItem, count: cartItem.count - 1 };
+        }
+        if (point === "+" && cartItem.count < Math.floor(cartItem.rating.count /10)) {
+          return { ...cartItem, count: cartItem.count + 1 };
+        }
+      }
+      return cartItem;
+    });
+    set({ cartItems: updatedCartItems }); 
+  
+  },
+
 }));
