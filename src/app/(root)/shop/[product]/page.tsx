@@ -12,10 +12,14 @@ import { cn } from "@/lib/utils";
 import { IProduct, StoreProducts } from "@/types";
 import React, { Fragment, useEffect, useState } from "react";
 import { shallow } from "zustand/shallow";
+import { useUser} from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 type ProductPageProps = {
   params: { product: string };
 };
 export default function ProductPage({ params }: ProductPageProps) {
+  const {user} = useUser();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const fetchProduct = useProducts(
     (state: StoreProducts) => state.fetchProduct,
@@ -23,10 +27,19 @@ export default function ProductPage({ params }: ProductPageProps) {
   );
 
   const loading = useProducts((state: StoreProducts) => state.loading, shallow);
+
   useEffect(() => {
     fetchProduct(+params.product);
   }, [params.product, fetchProduct]);
 
+  const handleAddToCart = () => {
+    if (!user) {
+      router.push('/sign-in');
+    } else {
+      addToCart(id, value);
+      setIsOpen(true);
+    }
+  };
   const product: IProduct | null = useProducts(
     (state: StoreProducts) => state.product,
     shallow
@@ -109,11 +122,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 }
               )}
               disabled={rating.count / 10 <= disabledButton()!}
-              onClick={() => {
-                addToCart(id, value);
-                setIsOpen(true);
-              }}
-            >
+              onClick={handleAddToCart}>
               ADD TO CART
             </button>
             <Transition appear show={isOpen} as={Fragment}>
